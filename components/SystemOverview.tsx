@@ -1,12 +1,12 @@
 "use client"
 import { useEffect, useState } from "react"
-import StatCard from "./StatCard"
 import DiskList from "./DiskList"
 import NetworkStatus from "./NetworkStatus"
 import Uptime from "./Uptime"
 import ProcessList from "./ProcessList"
 import SystemPerformanceChart from "./SystemPerformanceChart"
-import { Cpu, MemoryStickIcon as Memory, Server } from "lucide-react"
+import SystemResourcesCard from "./SystemResourcesCard"
+import { Server } from "lucide-react"
 
 interface SystemData {
   cpuUsage: string
@@ -36,7 +36,7 @@ export default function SystemOverview() {
     }
 
     fetchData()
-    const interval = setInterval(fetchData, 5000) // Actualiza cada 5s
+    const interval = setInterval(fetchData, 5000) // Update every 5 seconds
 
     return () => clearInterval(interval)
   }, [])
@@ -68,20 +68,32 @@ export default function SystemOverview() {
 
   return (
     <div className="space-y-6">
+      {/* Top row: Performance chart (larger) with Uptime on the right */}
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3">
+          <SystemPerformanceChart />
+        </div>
+        <div className="lg:col-span-1">
+          <Uptime uptime={data.uptime} />
+        </div>
+      </div>
+
+      {/* Middle row: Combined CPU/Memory, Network (larger), and Disk (larger) */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <StatCard title="CPU Usage" value={data.cpuUsage} unit="%" icon={<Cpu className="h-5 w-5" />} />
-        <StatCard title="Memory Usage" value={data.memoryUsage} unit="%" icon={<Memory className="h-5 w-5" />} />
-        <NetworkStatus speed={data.networkSpeed} latency={data.networkLatency} />
+        <div className="md:col-span-1">
+          <SystemResourcesCard cpuUsage={data.cpuUsage} memoryUsage={data.memoryUsage} />
+        </div>
+        <div className="md:col-span-1">
+          <NetworkStatus speed={data.networkSpeed} latency={data.networkLatency} />
+        </div>
+        <div className="md:col-span-1">
+          <DiskList disks={data.disks} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <SystemPerformanceChart />
-        <DiskList disks={data.disks} />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* Bottom row: Process list (full width) */}
+      <div className="grid grid-cols-1 gap-6">
         <ProcessList />
-        <Uptime uptime={data.uptime} />
       </div>
     </div>
   )

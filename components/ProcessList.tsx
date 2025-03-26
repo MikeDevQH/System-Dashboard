@@ -17,7 +17,7 @@ export default function ProcessList() {
   const [error, setError] = useState<string | null>(null)
   const [currentPage, setCurrentPage] = useState(0)
   const [searchTerm, setSearchTerm] = useState("")
-  const processesPerPage = 6
+  const processesPerPage = 10
 
   const fetchProcesses = async () => {
     setLoading(true)
@@ -39,22 +39,20 @@ export default function ProcessList() {
   useEffect(() => {
     fetchProcesses() // Carga inicial
 
-    // Actualizar cada 30 segundos
+    // Update every 30 seconds
     const interval = setInterval(fetchProcesses, 30000)
     return () => clearInterval(interval)
   }, [])
 
-  // Filtrar procesos por término de búsqueda
+  // Filter processes by search term
   const filteredProcesses = processes.filter(
-    (proc) =>
-      proc.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      String(proc.pid).includes(searchTerm) // Convertir pid a string para evitar errores
+    (proc) => proc.name.toLowerCase().includes(searchTerm.toLowerCase()) || String(proc.pid).includes(searchTerm), // Convertir pid a string para evitar errores
   )
 
   const totalPages = Math.ceil(filteredProcesses.length / processesPerPage)
   const paginatedProcesses = filteredProcesses.slice(
     currentPage * processesPerPage,
-    (currentPage + 1) * processesPerPage
+    (currentPage + 1) * processesPerPage,
   )
 
   return (
@@ -92,9 +90,7 @@ export default function ProcessList() {
       </div>
 
       {error && (
-        <div className="p-4 mb-4 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-200">
-          {error}
-        </div>
+        <div className="p-4 mb-4 rounded-lg bg-red-100 dark:bg-red-900/20 text-red-800 dark:text-red-200">{error}</div>
       )}
 
       {filteredProcesses.length === 0 ? (
@@ -103,22 +99,22 @@ export default function ProcessList() {
         </div>
       ) : (
         <div className="overflow-x-auto -mx-6">
-          <table className="w-full">
+          <table className="w-full table-fixed">
             <thead>
               <tr className="border-b border-border">
-                <th className="px-6 py-3 text-left  font-extrabold text-base text-muted-foreground uppercase tracking-wider">
+                <th className="px-6 py-3 text-left font-extrabold text-base text-muted-foreground uppercase tracking-wider w-[10%]">
                   PID
                 </th>
-                <th className="px-6 py-3 text-left  font-extrabold text-base text-muted-foreground uppercase tracking-wider">
+                <th className="px-6 py-3 text-left font-extrabold text-base text-muted-foreground uppercase tracking-wider w-[40%]">
                   Process
                 </th>
-                <th className="px-6 py-3 text-left  font-extrabold text-base text-muted-foreground uppercase tracking-wider">
+                <th className="px-6 py-3 text-left font-extrabold text-base text-muted-foreground uppercase tracking-wider w-[15%]">
                   CPU%
                 </th>
-                <th className="px-6 py-3 text-left  font-extrabold text-base text-muted-foreground uppercase tracking-wider">
+                <th className="px-6 py-3 text-left font-extrabold text-base text-muted-foreground uppercase tracking-wider w-[15%]">
                   Memory
                 </th>
-                <th className="px-6 py-3 text-left  font-extrabold text-base text-muted-foreground uppercase tracking-wider">
+                <th className="px-6 py-3 text-left font-extrabold text-base text-muted-foreground uppercase tracking-wider w-[20%]">
                   Status
                 </th>
               </tr>
@@ -146,7 +142,7 @@ export default function ProcessList() {
             </tbody>
           </table>
 
-          {/* Controles de paginación */}
+         {/* Pagination controls */}
           {totalPages > 1 && (
             <div className="flex justify-between items-center px-6 py-3 border-t border-border">
               <button
@@ -175,3 +171,4 @@ export default function ProcessList() {
     </div>
   )
 }
+

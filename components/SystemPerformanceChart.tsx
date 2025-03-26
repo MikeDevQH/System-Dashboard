@@ -27,10 +27,10 @@ const SystemPerformance = () => {
         time: new Date().toLocaleTimeString(),
         cpu: Number.parseFloat(result.cpuUsage),
         memory: Number.parseFloat(result.memoryUsage),
-        network: Number.parseFloat((result.networkSpeed / 1024).toFixed(2)), // Convertir a KB/s
+        network: Number.parseFloat((result.networkSpeed / 1024).toFixed(2)), // Convert to KB/s
       }
 
-      setData((prev) => [...prev.slice(-20), newPoint]) // Mantener solo los últimos 20 datos
+      setData((prev) => [...prev.slice(-20), newPoint]) // Keep only the last 20 data
     } catch (error) {
       console.error("Error fetching system data:", error)
     } finally {
@@ -40,7 +40,7 @@ const SystemPerformance = () => {
 
   useEffect(() => {
     fetchData() // Cargar datos al inicio
-    const interval = setInterval(fetchData, 5000) // Actualizar cada 5 segundos
+    const interval = setInterval(fetchData, 5000) // Update every 5 seconds
     return () => clearInterval(interval)
   }, [])
 
@@ -71,7 +71,7 @@ const SystemPerformance = () => {
         </button>
       </div>
 
-      <div className="h-[300px] w-full">
+      <div className="h-[350px] w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke={chartColors.grid} />

@@ -5,7 +5,7 @@ import type React from "react"
 import { Clock } from "lucide-react"
 
 interface UptimeProps {
-  uptime: number // Tiempo en segundos
+  uptime: number 
 }
 
 const Uptime: React.FC<UptimeProps> = ({ uptime }) => {
@@ -15,23 +15,23 @@ const Uptime: React.FC<UptimeProps> = ({ uptime }) => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentTime(new Date())
-      setCurrentUptime((prev) => prev + 1) // Incrementar uptime cada segundo
+      setCurrentUptime((prev) => prev + 1) 
     }, 1000)
     return () => clearInterval(interval)
   }, [])
 
-  // Convertir uptime a días, horas, minutos y segundos
+// Convert uptime to days, hours, minutes and seconds
   const days = Math.floor(currentUptime / 86400)
   const hours = Math.floor((currentUptime % 86400) / 3600)
   const minutes = Math.floor((currentUptime % 3600) / 60)
   const seconds = Math.floor(currentUptime % 60)
 
-  // Formatear con ceros a la izquierda
+// Format with leading zeros
   const formattedHours = hours.toString().padStart(2, "0")
   const formattedMinutes = minutes.toString().padStart(2, "0")
   const formattedSeconds = seconds.toString().padStart(2, "0")
 
-  // Obtener zona horaria en formato UTC±HH:MM
+// Get time zone in UTC±HH:MM format
   const timeZoneOffset = -currentTime.getTimezoneOffset()
   const timeZoneHours = Math.floor(timeZoneOffset / 60)
   const timeZoneMinutes = timeZoneOffset % 60
@@ -46,31 +46,30 @@ const Uptime: React.FC<UptimeProps> = ({ uptime }) => {
         <Clock className="h-5 w-5 text-primary" />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="space-y-2">
+      <div className="space-y-4">
+        <div className="space-y-1">
           <p className="text-sm text-muted-foreground">Current Time</p>
-          <p className="text-3xl font-mono text-primary">{currentTime.toLocaleTimeString()}</p>
-          <p className="text-sm text-muted-foreground">
+          <p className="text-2xl font-mono text-primary">{currentTime.toLocaleTimeString()}</p>
+          <p className="text-xs text-muted-foreground">
             {currentTime.toLocaleDateString(undefined, {
               weekday: "long",
-              year: "numeric",
-              month: "long",
+              month: "short",
               day: "numeric",
             })}
           </p>
         </div>
 
-        <div className="space-y-2">
+        <div className="space-y-1">
           <p className="text-sm text-muted-foreground">System Uptime</p>
-          <div className="flex items-baseline space-x-1">
-            <span className="text-3xl font-mono text-primary">
+          <div className="flex items-baseline">
+            <span className="text-2xl font-mono text-primary">
               {days > 0 ? `${days}d ` : ""}
               {formattedHours}:{formattedMinutes}:{formattedSeconds}
             </span>
           </div>
           <div className="flex items-center space-x-2">
             <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse"></div>
-            <p className="text-sm text-muted-foreground">Time Zone: {timeZoneString}</p>
+            <p className="text-xs text-muted-foreground">{timeZoneString}</p>
           </div>
         </div>
       </div>
