@@ -14,7 +14,6 @@ export default function BackgroundAnimation() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // Ajustar el tamaño del canvas al tamaño de la ventana
     const resizeCanvas = () => {
       if (canvas) {
         canvas.width = window.innerWidth
@@ -25,13 +24,12 @@ export default function BackgroundAnimation() {
     window.addEventListener("resize", resizeCanvas)
     resizeCanvas()
 
-    // Configuración de partículas
+    // Particle Configuration
     const particlesArray: Particle[] = []
     const numberOfParticles = Math.min(50, window.innerWidth / 20)
 
-    // Colores según el tema
     const particleColor = theme === "light" ? "rgba(59, 130, 246, 0.5)" : "rgba(96, 165, 250, 0.5)"
-
+    
     const lineColor = theme === "light" ? "rgba(59, 130, 246, 0.2)" : "rgba(96, 165, 250, 0.2)"
 
     // Clase Particle
@@ -73,14 +71,14 @@ export default function BackgroundAnimation() {
       }
     }
 
-    // Crear partículas
+    // Create partículas
     function init() {
       for (let i = 0; i < numberOfParticles; i++) {
         particlesArray.push(new Particle())
       }
     }
 
-    // Conectar partículas con líneas
+    // Connect particles with lines
     function connect() {
       if (!ctx) return
 
@@ -104,7 +102,7 @@ export default function BackgroundAnimation() {
       }
     }
 
-    // Animación
+    // Animation
     function animate() {
       if (!ctx || !canvas) return
 
