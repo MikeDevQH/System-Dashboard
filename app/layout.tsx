@@ -17,8 +17,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: "SystemDashboard - Modern System Monitoring",
-  description: "A modern, futuristic dashboard for monitoring system performance",
+  title: "SystemDashboard",
+  description: "Dashboard for monitoring system performance",
 }
 
 export default function RootLayout({
