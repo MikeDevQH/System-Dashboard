@@ -12,8 +12,11 @@
 
 ## 📸 Capturas de Pantalla
 
-### 📌 Vista General
-![Dashboard Preview](public/Screenshots/systemDashboard.png)
+## 📌 Gráfico estadístico
+![System Performance](public/Screenshots/systemPerformance.png)
+
+### 📌 Datos del sistema
+![System data](public/Screenshots/systemDashboard.png)
 
 ### 📌 Lista de Procesos
 ![Procesos Activos](public/Screenshots/processDashboard.png)
