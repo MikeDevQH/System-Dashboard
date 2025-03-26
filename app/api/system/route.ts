@@ -11,8 +11,8 @@ export async function GET() {
   return NextResponse.json({
     cpuUsage: cpu.currentLoad.toFixed(2),
     memoryUsage: ((mem.used / mem.total) * 100).toFixed(2),
-    networkSpeed: network[0]?.rx_sec || 0, // Velocidad de descarga en bytes/sec
-    networkLatency: network[0]?.ms || 0, // Latencia en ms
+    networkSpeed: network[0]?.rx_sec || 0, 
+    networkLatency: network[0]?.ms || 0, 
     disks: disk.map((d) => ({
       name: d.fs,
       used: d.used,

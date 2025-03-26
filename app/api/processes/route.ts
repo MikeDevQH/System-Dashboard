@@ -7,7 +7,7 @@ export async function GET() {
     let command: string;
 
     if (os.platform() === "win32") {
-      // Nuevo comando compatible con Windows 10/11
+      
       command = `powershell -Command "Get-Process | Select-Object Id,ProcessName,CPU,WS,MainWindowTitle | ConvertTo-Json"`;
     } else {
       command = `ps -eo pid,comm,user,%cpu,%mem,stat --no-headers`;
